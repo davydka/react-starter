@@ -1,7 +1,11 @@
-import React from "react";
+import React, { forwardRef } from "react";
 
-const Text = ({ children, as: Tag = "span", ...rest }) => {
-  return <Tag {...rest}>{children}</Tag>;
-};
+const Text = forwardRef(({ children, as: Tag = "span", ...rest }, ref) => {
+  return (
+    <Tag ref={ref} {...rest}>
+      {children}
+    </Tag>
+  );
+});
 
 export default Text;
