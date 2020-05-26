@@ -6,7 +6,7 @@ export default {
   title: "Text",
 };
 
-export const TextStory = () => {
+export const text_types = () => {
   return (
     <>
       <Text as="h1" type={textTypes.HEADER_1}>

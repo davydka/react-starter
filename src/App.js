@@ -7,6 +7,7 @@ import { useClientRect } from "lib/hooks/useClientRect";
 
 import { UserList } from "domain/users/UserList";
 import { Text } from "components/Text";
+import { DefaultPlayground } from "domain/3D/DefaultPlayground";
 
 import "./App.module.scss";
 
@@ -32,6 +33,7 @@ const App = () => {
             link goes here
           </a>
         </header>
+        <DefaultPlayground />
       </div>
     </ApolloProvider>
   );
