@@ -1,8 +1,8 @@
 import React from "react";
 import { ApolloProvider } from "@apollo/react-hooks";
 
-import { client } from "lib/initApolloClient";
 import "lib/theme/global.scss";
+import { client } from "lib/initApolloClient";
 import { useClientRect } from "lib/hooks/useClientRect";
 
 import { UserList } from "domain/users/UserList";
