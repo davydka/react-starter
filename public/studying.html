@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
 <head>
   <meta charset="utf-8" />
   <title>studying</title>
@@ -7,21 +7,19 @@
 <body>
 
 <div id='root'>
-  <ul class='listContainer'>
+  <ul class='someElements'>
     <li>one</li>
     <li>two</li>
-    <li>
-      <p class='three'>three with a <span class='three'>nested three</span></p>
-    </li>
+    <li><p class='three'>here is a <span class='three'>three</span> inside of a three</p></li>
     <li>four</li>
   </ul>
 
-  <div class='another'>another element over here</div>
+  <div class='another'>another element</div>
 
-  <ul class='anotherListContainer'>
+  <ul class='moreElements'>
     <li>another one</li>
     <li>another two</li>
-    <li><span class='three'>another three</span></li>
+    <li class='three'>another three on a container el</li>
     <li>another four</li>
   </ul>
 </div>
@@ -30,11 +28,11 @@
   .redBorder { border: 1px solid red; }
   .blueBorder { border: 1px solid blue; }
 </style>
+
 <script>
   // Depth First
   const traverseDF = (el, fn) => {
     fn(el);
-    // debugger;
     for(let child of el.childNodes) {
       if(child.nodeType !== Node.ELEMENT_NODE) {
         continue;
@@ -43,53 +41,48 @@
     }
   }
 
-  const getElementsByClassnameDF = (classname) => {
+  const getElementsByClassDF = (className) => {
     const target = [];
-
     traverseDF(document.body, (el) => {
-      if(el.classList.contains(classname)) {
+      if(el.classList.contains(className)) {
         target.push(el);
         el.classList.add('redBorder');
       }
-    });
-
+    })
     return target;
   }
 
   // Breadth First
-  const breadthHolder = [];
+  const breadthContainer = [];
   const traverseBF = (el, fn) => {
     fn(el);
-    // debugger;
     for(let child of el.childNodes) {
       if(child.nodeType !== Node.ELEMENT_NODE) {
         continue;
       }
-      breadthHolder.push(child)
+      breadthContainer.push(child);
     }
-    if(breadthHolder.length) {
+    if(breadthContainer.length) {
       // shift() method removes the first element from an array and returns that removed element
-      traverseBF(breadthHolder.shift(), fn);
+      traverseBF(breadthContainer.shift(), fn);
     }
   }
 
-  const getElementsByClassnameBF = (classname) => {
+  const getElementsByClassBF = (className) => {
     const target = [];
-
     traverseBF(document.body, (el) => {
-      if(el.classList.contains(classname)) {
+      if(el.classList.contains(className)) {
         target.push(el);
         el.classList.add('redBorder');
       }
-    });
-
+    })
     return target;
   }
 
-  const testDF = getElementsByClassnameDF('three')
-  const testBF = getElementsByClassnameBF('three')
+
+  const testDF = getElementsByClassDF('three')
+  const testBF = getElementsByClassBF('three')
   debugger;
 </script>
-
 </body>
 </html>
