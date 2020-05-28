@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>parking lot</title>
+</head>
+<body>
+
+<div id='root'>
+
+</div>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+  #root {
+    border: 1px solid darkgray;
+    height: 500px;
+    width: 500px;
+    position: relative;
+  }
+  .parkingLot {
+    border: 1px solid yellow;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .spot {
+    border: 1px solid grey;
+    min-width: 20%;
+    min-height: 50%;
+    position: relative;
+  }
+
+  .driver {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    background-color: aqua;
+  }
+</style>
+
+<script>
+  /*
+  Design an OO parking lot.
+  What classes and functions will it have.
+  It should say, full, empty and also be able to find spot for Valet parking.
+  The lot has 3 different types of parking: regular, handicapped and compact.
+   */
+
+  /*
+  getState: [full, empty, normal],
+  spots: [
+    spot: {car: null, distance: 1-10, kind: [regular, compact, handicapped]}
+  ]
+  spot has car, distance, and kind prop
+    defaults: {car: null, distance: 1 + Math.floor(Math.random() * 10), kind: regular}
+    compact and handicapped are a kind of regular Spot class
+  driver is a class, can park(nearest=false) and unpark() and has a prop, kind: [regular, compact, handicapped]
+  valet is a type of driver that parks nearest
+    -> get nearest available spot by hash
+    -> iterate over hash
+      - convert obj to array (const key = Object.keys(spots)) and then keys.sort((a, b) => {spots[a] - spots[b]})
+        - mergeSort, bubbleSort, selectionSort ????
+
+  classes:
+  ParkingLot
+    spots: []
+    getState: [full, empty, normal]
+  Spot
+    {car: null, distance: 1-10, kind: [regular, compact, handicapped]
+  Driver
+    isValet = boolean
+    licensePlate = something unique
+    park(nearest)
+    unpark()
+   */
+
+  class ParkingLot {
+    constructor() {
+      this.spots = [];
+
+      const root = document.getElementById('root');
+      this.el = document.createElement('div');
+      this.el.classList.add('parkingLot');
+      root.appendChild(this.el);
+    }
+
+    getState(kind) {
+      const available = this.spots.filter(spot => {
+        if (kind && spot.kind === kind && !spot.car) {
+          return spot;
+        }
+        return !spot.car;
+      });
+
+      if (available.length === this.spots.length) {
+        return 'empty';
+      }
+
+      if (available.length === 0) {
+        return 'full';
+      }
+      return 'normal';
+    }
+
+    addSpot(spot) {
+      this.spots.push(spot);
+      this.el.appendChild(spot.el);
+    }
+  }
+
+  class Spot {
+    constructor() {
+      this.car = null;
+      this.distance = Math.floor(Math.random() * 10);
+      let kinds = ['regular', 'compact', 'handicapped'];
+      this.kind = kinds[Math.floor(Math.random() * 3)];
+
+      this.el = document.createElement('div');
+      this.el.classList.add('spot');
+    }
+
+    addCar(driver) {
+      this.car = driver;
+      this.el.appendChild(driver.el);
+    }
+
+    removeCar() {
+      this.car = null;
+      this.el.innerHTML = '';
+    }
+  }
+
+  class Driver {
+    constructor(isValet = false) {
+      this.isValet = isValet;
+      this.licensePlate = new Date().toJSON();
+      let kinds = ['regular', 'compact', 'handicapped']
+      this.kind = kinds[Math.floor(Math.random() * 3)];
+
+      this.el = document.createElement('div');
+      this.el.classList.add('driver');
+    }
+
+    park(parkingLot) {
+      let spots = parkingLot.spots;
+      if(this.isValet) {
+        spots.sort((a, b) => {
+          return a.distance - b.distance;
+        })
+      }
+      // debugger;
+      for (let spot of parkingLot.spots) {
+        if (!spot.car && spot.kind === this.kind) {
+          // spot.car = this;
+          spot.addCar(this);
+          return;
+        }
+      }
+    }
+
+    unpark(parkingLot) {
+      for (let spot of parkingLot.spots) {
+        if (spot.car && spot.car.licensePlate === this.licensePlate) {
+          // spot.car = null;
+          spot.removeCar();
+          return;
+        }
+      }
+    }
+  }
+
+  const parkHere = new ParkingLot();
+  [...Array(10)].map(_ => {
+    parkHere.addSpot(new Spot());
+  })
+  const driver1 = new Driver(true);
+  driver1.park(parkHere);
+  const test = parkHere.getState();
+  debugger;
+  driver1.unpark(parkHere);
+  debugger;
+</script>
+</body>
+</html>
