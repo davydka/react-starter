@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang ='en'>
+<head>
+  <title>array flat</title>
+</head>
+<body>
+
+<style></style>
+<script>
+  // implement Array.flat()
+  // const input_1 = [1, 2, [3, 4]]
+  // expected output: [1, 2, 3, 4]
+  // are there any nested level things?
+  // do we need to consider 3 or 4 layers deep
+  // yes
+  // const input_2 = [1, 2, [3, 4, [5, 6, [7, 8]]]];
+  // expect output: [1, 2, 3, 4, 5, 6, 7, 8]
+  // is there a base case? null?
+
+  const tranverseArray = (arr, fn) => {
+    for(let item of arr) {
+      fn(item);
+      if(Array.isArray(item)) {
+        tranverseArray(item, fn);
+      }
+    }
+
+  }
+  const arrayFlat = (arr) => {
+    const target = [];
+    tranverseArray(arr, (item) => {
+      if(!item) {
+        return;
+      }
+      if(!Array.isArray(item)) {
+        target.push(item);
+      }
+    });
+    return target;
+  }
+
+  const test = arrayFlat([1, 2, [3, 4]]);
+  const test2 = arrayFlat([1, 2, [3, 4, [5, 6, [7, 8]]]]);
+  debugger;
+</script>
+</body>
+</html>
