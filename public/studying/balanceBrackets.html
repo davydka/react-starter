@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>balance brackets</title>
+</head>
+<body>
+
+<style>
+
+</style>
+<script>
+  // Complete the isBalanced function below.
+  const isBalanced = (s) => {
+    let target = 'YES';
+    const brackets = '{}<>[]()'; // this string is actually a control structure
+    let stack = [];
+    for(let char of s) {
+      let bracketsIndex = brackets.indexOf(char);
+      if(bracketsIndex <= -1) {
+        continue;
+      }
+
+      // opening bracket
+      if(bracketsIndex % 2 === 0) {
+        stack.push(bracketsIndex+1); // ref to closing bracket
+      }
+
+      // closing bracket
+      if(bracketsIndex % 2 !== 0) {
+        // we're going to pop off the last val in the stack
+        // that val is a ref to a closing bracket value(1, 3, 5, 7)
+        // besides just being 'matched' (one opening bracket for every closing bracket)
+          // the brackets have to be 'balanced'
+            //
+        if(stack.pop() !== bracketsIndex) {
+          target = 'NO';
+        }
+      }
+    }
+    // catch dangling open chars
+    if(stack.length !== 0) {
+      target = 'NO';
+    }
+    return target;
+  }
+
+  const isBalanced2 = (s) => {
+    let target = 'YES';
+    const openingBrackets = '{[<('; // this is a control structure
+    const bracketMap = {
+      '{': '}',
+      '[': ']',
+      '(': ')',
+      '<': '>',
+    }
+    const stack = [];
+    for(let char of s) {
+      if(openingBrackets.indexOf(char) > -1) {
+        stack.push(char);
+      } else {
+        const lastChar = stack.pop(); // if closing bracket, pop last char from stack, which also reduces length
+        // now check that last char's closing val is the same as whatever current closing char we have
+        // if not, then the bracket string is no 'balanced'
+        if(bracketMap[lastChar] !== char) {
+          target = 'NO';
+        }
+      }
+    }
+    // catch dangling open chars
+    if(stack.length !== 0) {
+      target = 'NO';
+    }
+    return target;
+  }
+
+  /*
+  yes
+  {(([])[])[]}
+
+  no
+  {(([])[])[]]}
+
+  yes
+  {(([])[])[]}[]
+
+  no
+  {{)[](}}
+
+  no
+  {[(])}
+   */
+  const test = isBalanced2('{[(])}');
+  debugger;
+
+</script>
+</body>
+</html>
