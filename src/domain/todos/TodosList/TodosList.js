@@ -18,6 +18,7 @@ const TodosList = () => {
   const { loading, error, data } = useQuery(QUERY, {
     variables: { page: currentPage },
   });
+  const pageLimit = 10;
 
   const handleClick = (dir) => {
     if (dir === "inc") {
@@ -48,9 +49,11 @@ const TodosList = () => {
         </button>
       )}
       <Text style={{ margin: "0 20px" }}>On page: {currentPage}</Text>
-      <button onClick={() => handleClick("inc")}>
-        next page: {currentPage + 1}
-      </button>
+      {currentPage < pageLimit && (
+        <button onClick={() => handleClick("inc")}>
+          next page: {currentPage + 1}
+        </button>
+      )}
     </>
   );
 };
