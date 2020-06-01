@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Text Text Types 1`] = `
+Array [
+  <h1
+    className="HEADER_1"
+  >
+    Heading 1
+  </h1>,
+  <h2
+    className="HEADER_2"
+  >
+    Heading 2
+  </h2>,
+  <h3
+    className="HEADER_3"
+  >
+    Heading 3
+  </h3>,
+  <h4
+    className="HEADER_4"
+  >
+    Heading 4
+  </h4>,
+  <h5
+    className="HEADER_5"
+  >
+    Heading 5
+  </h5>,
+  <h6
+    className="HEADER_6"
+  >
+    Heading 6
+  </h6>,
+  <p
+    className="BODY_1"
+  >
+    Body 1
+  </p>,
+  <p
+    className="BODY_2"
+  >
+    Body 2
+  </p>,
+]
+`;
