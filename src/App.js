@@ -7,7 +7,7 @@ import { useClientRect } from "lib/hooks/useClientRect";
 
 import { UserList } from "domain/users/UserList";
 import { Text } from "components/Text";
-import { DefaultPlayground } from "domain/3D/DefaultPlayground";
+import { Link } from "components/Link";
 
 import "./App.module.scss";
 
@@ -24,16 +24,15 @@ const App = () => {
             px and height of {height}px
           </Text>
           <UserList />
-          <a
+          <Link
             className="appLink"
             href="https://reactjs.org"
             target="_blank"
             rel="noopener noreferrer"
           >
             link goes here
-          </a>
+          </Link>
         </header>
-        <DefaultPlayground />
       </div>
     </ApolloProvider>
   );
