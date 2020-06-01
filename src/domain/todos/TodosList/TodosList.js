@@ -1,24 +1,77 @@
 import React, { useState } from "react";
-import { useQuery } from "@apollo/react-hooks";
+import { useMutation, useQuery } from "@apollo/react-hooks";
 import { gql } from "apollo-boost";
 
 import { Text } from "components/Text";
 
 const QUERY = gql`
   query Todos($page: Int) {
-    todos(page: $page, limit: 5) {
+    todos(page: $page, limit: 5, sort: "id", dir: "desc") {
       task
       id
     }
   }
 `;
 
+const CREATE_TODO = gql`
+  mutation CreateTodo($input: CreateTodoInput!) {
+    createTodo(input: $input) {
+      task
+      id
+    }
+  }
+`;
+
+const CreateTodo = ({ currentPage }) => {
+  const [createTodo] = useMutation(CREATE_TODO, {
+    update(cache, { data: { createTodo } }) {
+      const cacheData = cache.readQuery({
+        query: QUERY,
+        variables: { page: currentPage },
+      });
+      cache.writeQuery({
+        query: QUERY,
+        variables: { page: currentPage },
+        data: { todos: [createTodo].concat(cacheData.todos) },
+      });
+    },
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    for (let childNode of e.currentTarget.childNodes) {
+      if (childNode.tagName === "INPUT") {
+        createTodo({
+          variables: {
+            input: {
+              user_id: 1,
+              task: childNode.value,
+              done: false,
+            },
+          },
+        }).then((res) => {
+          console.warn("new data here:", res);
+        });
+      }
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <input />
+        <button type="submit">create new todo</button>
+      </form>
+    </div>
+  );
+};
+
 const TodosList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const { loading, error, data } = useQuery(QUERY, {
     variables: { page: currentPage },
   });
-  const pageLimit = 10;
+  const pageLimit = 11;
 
   const handleClick = (dir) => {
     if (dir === "inc") {
@@ -54,6 +107,7 @@ const TodosList = () => {
           next page: {currentPage + 1}
         </button>
       )}
+      <CreateTodo currentPage={currentPage} />
     </>
   );
 };
