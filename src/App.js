@@ -6,6 +6,7 @@ import { client } from "lib/initApolloClient";
 import { useClientRect } from "lib/hooks/useClientRect";
 
 import { UserList } from "domain/users/UserList";
+import { TodosList } from "domain/todos/TodosList";
 import { Text } from "components/Text";
 import { Link } from "components/Link";
 
@@ -23,6 +24,7 @@ const App = () => {
             I am a paragraph at ({x}px, {y}px) position with a width of {width}
             px and height of {height}px
           </Text>
+          <TodosList />
           <UserList />
           <Link
             className="appLink"
