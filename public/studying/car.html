@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>car much?</title>
+</head>
+<body>
+
+<script>
+  // Create a basic Car object with functions accelerate and deccelerate.
+  // Now create two cars with separate starting speeds and perform this set of speed changes on them.
+
+  class Car {
+    constructor(speed) {
+      this.speed = speed ? speed : 0;
+    }
+    accelerate(amount) {
+      this.speed += amount;
+    }
+    decelerate(amount) {
+      this.speed -= amount;
+    }
+  }
+
+  const Car2 = function(speed=0){
+    this.speed = speed;
+    this.accelerate = (amount) => {
+      this.speed += amount;
+    };
+    this.decelerate = (amount) => {
+      this.speed -= amount;
+    }
+    return this;
+  }
+
+  const honda = new Car(5);
+  honda.accelerate(5);
+  honda.decelerate(2);
+
+  const chevy = new Car2(2);
+  chevy.accelerate(2);
+  chevy.decelerate(1);
+  const test = typeof Car;
+  debugger;
+
+</script>
+</body>
+</html>
+
