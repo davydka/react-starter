@@ -17,29 +17,27 @@
   // expect output: [1, 2, 3, 4, 5, 6, 7, 8]
   // is there a base case? null?
 
-  const tranverseArray = (arr, fn) => {
-    for(let item of arr) {
-      fn(item);
-      if(Array.isArray(item)) {
-        tranverseArray(item, fn);
+  const traverseArray = (current, fn) => {
+    debugger
+    fn(current);
+    if(Array.isArray(current)) {
+      for(let item of current) {
+        traverseArray(item, fn);
       }
     }
-
   }
+
   const arrayFlat = (arr) => {
     const target = [];
-    tranverseArray(arr, (item) => {
-      if(!item) {
+    traverseArray(arr, (item) => {
+      if(Array.isArray(item)) {
         return;
       }
-      if(!Array.isArray(item)) {
-        target.push(item);
-      }
+      target.push(item);
     });
     return target;
   }
-
-  const test = arrayFlat([1, 2, [3, 4]]);
+  const test1 = arrayFlat([1, 2, [3, 4]]);
   const test2 = arrayFlat([1, 2, [3, 4, [5, 6, [7, 8]]]]);
   debugger;
 </script>
