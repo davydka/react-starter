@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <title>button clicks</title>
+</head>
+<body>
+
+<section>
+  <button>Clicked 0 times</button>
+</section>
+
+<style>
+  body { font-family: BlinkMacSystemFont, sans-serif; }
+  button {
+    padding: 0;
+    margin: 0;
+  }
+  section {
+    display: flex;
+    flex-wrap: wrap;
+  }
+</style>
+
+<script>
+  /*
+  Write HTML, CSS, and JS to perform the following:
+    There is a button on a page with text inside that says 'Clicked {#} times' with the number changing each time the button has been clicked.
+    Follow up: Now each time the button is clicked, spawn a new button with its own counter, and the same functionality.
+   */
+  class Counter {
+    constructor(el) {
+      this.count = 0;
+
+      if(el) {
+        this.el = el;
+      } else {
+        this.el = document.createElement('button');
+        this.el.addEventListener('click', this.add.bind(this));
+        this.el.innerHTML = `Clicked ${this.count} times`;
+        const section = document.getElementsByTagName('section')[0];
+        section.appendChild(this.el);
+      }
+    }
+    add() {
+      this.count = this.count + 1;
+      this.el.innerHTML = `Clicked ${this.count} times`;
+      new Counter();
+    }
+  }
+
+  const button = document.getElementsByTagName('button')[0];
+  const counter = new Counter(button);
+  button.addEventListener('click', counter.add.bind(counter));
+</script>
+
+</body>
+</html>
