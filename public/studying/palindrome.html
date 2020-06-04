@@ -14,13 +14,9 @@
     return str.split('').every((c, i) => c === str[str.length - i - 1]);
   }
 
-  const testString = 'abcffcba';
+  const testString = 'abcfcba';
   const section = document.getElementsByTagName('section')[0];
   testString.split('').forEach((c, i) => {
-    if(testString.length % 2) {
-      return;
-    }
-
     const inny = document.createElement('div');
     inny.style.cssText = style + `background: ${c === testString[testString.length - i - 1] ? 'blue' : 'brown'};`;
     inny.innerHTML = c;
