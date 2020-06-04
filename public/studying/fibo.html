@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <title>fibo</title>
+</head>
+<body>
+
+<style>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  div {
+    height: 5vw;
+    background: orangered;
+    margin: 8px 0;
+  }
+</style>
+<script>
+  let fibo = [0, 1];
+  let count = 0;
+  const fiboBuilder = (n) => {
+    const current = fibo[fibo.length - 1] + fibo[fibo.length - 2];
+    fibo.push(current);
+    count++;
+    const div = document.createElement('div');
+    div.style.cssText = `width: ${100/current}vw`;
+    document.body.appendChild(div);
+    if(count < n) {
+      fiboBuilder(n);
+    }
+  }
+  const test = fiboBuilder(40);
+  debugger;
+</script>
+</body>
+</html>
