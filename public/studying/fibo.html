@@ -31,7 +31,33 @@
       fiboBuilder(n);
     }
   }
-  const test = fiboBuilder(40);
+
+  const memoize = (fn) => {
+    const cache = {};
+    return (...args) => {
+      if(cache[args]) {
+        return cache[args];
+      }
+      const target = fn.apply(this, args);
+      cache[args] = target;
+
+      if(target >= 1) {
+        const div = document.createElement('div');
+        div.style.cssText = `width: ${100/target}vw`;
+        document.body.appendChild(div);
+      }
+
+      return target;
+    }
+  }
+  const fib2 = memoize((n) => {
+
+    if(n < 2) {
+      return n;
+    }
+    return fib2(n - 1) + fib2(n - 2);
+  })
+  const test = fib2(40);
   debugger;
 </script>
 </body>
